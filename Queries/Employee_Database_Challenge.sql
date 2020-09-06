@@ -62,3 +62,17 @@ ON (e.emp_no = de.emp_no)
 WHERE (e.birth_date BETWEEN '1952-01-01' AND '1955-12-31');
 SELECT * FROM retirement_titles;
 -- Use Dictinct with Orderby to remove duplicate rows
+SELECT DISTINCT ON (rt.emp_no) rt.emp_no,
+rt.first_name,
+rt.last_name,
+rt.title
+INTO unique_titles
+FROM retirement_titles as rt
+ORDER BY rt.emp_no, rt.to_date DESC;
+SELECT * FROM unique_titles;
+SELECT COUNT (title),
+title
+INTO retiring_titles
+FROM unique_titles
+GROUP BY title;
+SELECT * FROM retiring_titles;
