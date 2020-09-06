@@ -42,7 +42,7 @@ CREATE TABLE dept_emp (
 );
 CREATE TABLE titles (
 	emp_no INT NOT NULL,
-	title VARCHAR NOT NULL,
+	title VARCHAR(50) NOT NULL,
 	from_date DATE NOT NULL,
 	to_date DATE NOT NULL,
 	FOREIGN KEY (emp_no) REFERENCES employees (emp_no),
@@ -175,3 +175,18 @@ FROM sales_retirement_info as sri
 LEFT JOIN dept_emp as de
 ON sri.emp_no = de.emp_no
 WHERE (dept_no = 'd007');
+SELECT * FROM titles;
+SELECT e.emp_no,
+    e.first_name,
+e.last_name,
+    titles.title,
+	de.from_date,
+    de.to_date
+	INTO retirement_titles
+FROM employees as e
+INNER JOIN titles as titles
+ON (e.emp_no = titles.emp_no)
+INNER JOIN dept_emp as de
+ON (e.emp_no = de.emp_no)
+WHERE (e.birth_date BETWEEN '1952-01-01' AND '1955-12-31');
+SELECT * FROM retirement_titles;
